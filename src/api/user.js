@@ -14,3 +14,9 @@ export const yanzm = (clientToken) => {
     url: `/api/user-service/user/imageCode/${clientToken}`
   })
 }
+// 获取个人信息
+export const userInfo=(id)=>{
+  return request({
+    url:`/api/user-service/user/${id}`
+  })
+}

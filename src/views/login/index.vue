@@ -181,6 +181,7 @@ export default {
         this.userInfo = data
         this.msg = data.msg
         this.token = data.token
+        console.log(data);
         this.$store.dispatch('user/getUserInfo', this.userInfo)
         this.$store.dispatch('user/getCode', this.token)
         window.localStorage.setItem('DILIKE', this.token)

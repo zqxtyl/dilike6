@@ -12,6 +12,7 @@
       <el-form-item class="test">
         <span>选择日期：</span
         ><el-date-picker
+          value-format="yyyy-MM-dd"
           v-model="value1"
           type="daterange"
           range-separator="至"
@@ -23,7 +24,7 @@
         >查询</el-button
       >
     </el-form>
-    <el-table :data="list" style="width: 100%">
+    <el-table :data="list" style="width: 100%" v-loading="loading">
       <el-table-column type="index" label="序号" />
       <el-table-column prop="orderNo" label="订单编号" />
       <el-table-column prop="skuName" label="商品名称" />
@@ -50,7 +51,7 @@
       <el-pagination
         :current-page="page.pageIndex"
         :page-size="page.pageSize"
-        :total="page.totalPage"
+        :total="page.totalCount"
         layout="prev,pager,next"
         @current-change="changePage"
       />
@@ -64,20 +65,21 @@
 import descar from '@/components/Descar'
 import { getDD } from '@/api/table'
 export default {
-  name:'DingDan',
+  name: 'DingDan',
   data() {
     return {
       list: [],
       input: '',
-      value1: '',
+      value1: [],
       page: {
         pageIndex: 1,
         pageSize: 10,
         totalCount: 0,
-        orderNo: '',
+        orderNo: '', //订单编号
       },
       isShow: false,
       fand: {}, //获取点击对象
+      loading:false
     }
   },
 
@@ -88,15 +90,17 @@ export default {
   methods: {
     //获取数据
     async getDD() {
+      this.loading=true
       const { data } = await getDD(this.page)
-      console.log(data)
+      // console.log(data)
       // console.log(row)
       this.list = data.currentPageRecords
-      this.page.totalCount = data.totalCount
+      this.page.totalCount = parseInt(data.totalCount)
       this.page.orderNo = data.currentPageRecords.orderNo
       // console.log(this.page.totalCount)
       // this.test = this.list.map(item => item.status)
       // console.log(this.test)
+      this.loading=false
     },
     //过滤数据
     tacked(row, column, cellValue) {
@@ -124,9 +128,12 @@ export default {
     async sousuo() {
       const { data } = await getDD({
         orderNo: this.input,
+        startDate: this.value1[0],
+        endDate: this.value1[1],
       })
       this.list = data.currentPageRecords
       console.log(data)
+      // console.log(this.value1)
     },
   },
   components: {

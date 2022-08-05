@@ -356,7 +356,7 @@ export function minHeight(resfile) {
   return document.body.clientHeight - 180 + 'px'
 }
 
-export function formatDate(date, fmt = 'yyyy-MM-dd') {
+export function formatDate(date, fmt = 'yyyy.MM.dd hh:mm:ss') {
   if (!(date instanceof Array)) {
     date = new Date(date)
   }

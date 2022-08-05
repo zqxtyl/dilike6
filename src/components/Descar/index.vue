@@ -56,7 +56,7 @@ export default {
       default: false,
     },
     list: {
-      type: Object,
+      type: [Object],
       default: 'default',
     },
   },

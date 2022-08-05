@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import store from '@/store'
-// 工单管理
+// 工单状态列表
 export const getList = () => {
   return request({
     url: '/api/task-service/task/allTaskStatus',
@@ -12,5 +12,12 @@ export const getDD = (params) => {
     url: '/api/order-service/order/search',
     params,
 
+  })
+}
+// 工单列表
+export const getGDList=(params)=>{
+  return request({
+    url:'/api/task-service/task/search',
+    params
   })
 }
